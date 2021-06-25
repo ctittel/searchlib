@@ -16,9 +16,9 @@ class _State:
 class _Problem(py_search.base.Problem):
     def __init__(self, initial_state, initial_cost, goal_test_fun, successors_fun, calc_cost_fun):
         super().__init__(initial=initial_state, initial_cost=initial_cost)
-        self.goal_test = goal_test_fun
-        self.successors = successors_fun
-        self.calc_cost = calc_cost_fun
+        self.goal_test = lambda self, state: goal_test_fun(state)
+        self.successors = lambda self, state: successors_fun(state)
+        self.calc_cost = lambda self, state, action: calc_cost_fun(state, action)
 
 
 def astar(initial_state: "StateType",
