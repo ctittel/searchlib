@@ -86,6 +86,6 @@ def astar(initial_state: "StateType",
 
         actions = [None] + actions[:-1]
         
-        return reversed(list(zip(states,actions)))
+        return list(reversed(list(zip(states,actions))))
     else:
         return None
