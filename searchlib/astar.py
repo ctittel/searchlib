@@ -7,8 +7,7 @@ import typing as typ
 
 class _State:
     def __init__(self, state, accumulated_cost):
-        assert state
-        assert accumulated_cost
+        assert state != None
         self.wrapped_state = state
         self.accumulated_cost = accumulated_cost
 
@@ -52,7 +51,6 @@ def astar(initial_state: "StateType",
         state = node.state
         assert isinstance(state, _State)
         for action in get_actions(state.wrapped_state):
-            assert action
             next_wrapped_state = get_state(state.wrapped_state, action)
             next_cost = state.accumulated_cost + \
                 get_cost(state.wrapped_state, action)
