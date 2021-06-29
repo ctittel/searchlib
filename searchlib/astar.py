@@ -29,8 +29,9 @@ class _Problem(py_search.base.Problem):
     def successors(self, state_node):
         return self.successors_fun(state_node)
 
-    def calc_cost(self, state_node):
-        return self.calc_cost_fun(state_node)
+    def node_value(self, state_node):
+        print("calc_cost called")
+        return self.calc_cost_fun(state_node.state)
 
 
 def astar(initial_state: "StateType",
@@ -41,6 +42,8 @@ def astar(initial_state: "StateType",
           get_cost: typ.Callable[["StateType", "ActionType"], "CostType"],
           get_heuristic: typ.Callable[["StateType"], "CostType"] = None
           ):
+    print("astar called")
+
     def goal_test_fun(state_node: py_search.base.Node):
         state = state_node.state
         if not state:
@@ -62,10 +65,14 @@ def astar(initial_state: "StateType",
                 parent=node
             )
 
-    def calc_cost_fun(state): return state.accumulated_cost
+    calc_cost_fun = None
     if get_heuristic:
         def calc_cost_fun(state): return state.accumulated_cost + \
             get_heuristic(state.wrapped_state)
+        print("Use heuristic")
+    else:
+        def calc_cost_fun(state): return state.accumulated_cost
+    assert calc_cost_fun
 
     problem = _Problem(_State(initial_state, initial_cost),
                        initial_cost, goal_test_fun, successors_fun, calc_cost_fun)
@@ -85,7 +92,7 @@ def astar(initial_state: "StateType",
             node = node.parent
 
         actions = [None] + actions[:-1]
-        
-        return list(reversed(list(zip(states,actions))))
+
+        return list(reversed(list(zip(states, actions))))
     else:
         return None
