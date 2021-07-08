@@ -33,7 +33,7 @@ class _Problem(py_search.base.Problem):
         return self.calc_cost_fun(state_node.state)
 
 
-def astar(initial_state: "StateType",
+def astar_tree(initial_state: "StateType",
           initial_cost: "CostType",
           is_goal: typ.Callable[["StateType"], bool],
           get_actions: typ.Callable[["StateType"], typ.Iterable["ActionType"]],
