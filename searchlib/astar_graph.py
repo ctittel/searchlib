@@ -11,7 +11,7 @@ class _Problem(py_search.base.Problem):
         self.goal_test_fun = goal_test_fun
         self.successors_fun = successors_fun
         if calc_heuristic_fun:
-            self.node_value = lambda state_node: py_search.base.Problem.node_value(state_node) + calc_heuristic_fun(state_node.state)
+            self.node_value = lambda state_node: py_search.base.Problem.node_value(self, state_node) + calc_heuristic_fun(state_node.state)
 
     def goal_test(self, state_node, goal_node):
         return self.goal_test_fun(state_node)
