@@ -29,7 +29,8 @@ def astar_graph(initial_state: "StateType",
           get_actions: typ.Callable[["StateType"], typ.Iterable["ActionType"]],
           get_state: typ.Callable[["StateType", "ActionType"], "StateType"],
           get_cost: typ.Callable[["StateType", "ActionType"], "CostType"],
-          get_heuristic: typ.Callable[["StateType"], "CostType"] = None
+          get_heuristic: typ.Callable[["StateType"], "CostType"] = None,
+          include_total_cost = False
           ):
     def goal_test_fun(state_node: py_search.base.Node):
         state = state_node.state
@@ -66,6 +67,10 @@ def astar_graph(initial_state: "StateType",
 
         actions = [None] + actions[:-1]
 
-        return list(reversed(list(zip(states, actions))))
+        result = list(reversed(list(zip(states, actions))))
+        if include_total_cost:
+            return (result, solution_node.cost())
+        else:
+            return result
     else:
         return None
