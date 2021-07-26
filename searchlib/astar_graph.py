@@ -1,7 +1,6 @@
 import py_search
 from py_search.informed import best_first_search
-import typing as typ
-
+from typing import Callable, Any, Iterable
 # For now just a wrapper of py_search best_first
 
 
@@ -19,19 +18,37 @@ class _Problem(py_search.base.Problem):
     def successors(self, state_node):
         return self.successors_fun(state_node)
 
-    # def node_value(self, state_node):
-    #     return self.calc_cost_fun(state_node.state)
-
-
-def astar_graph(initial_state: "StateType",
-          initial_cost: "CostType",
-          is_goal: typ.Callable[["StateType"], bool],
-          get_actions: typ.Callable[["StateType"], typ.Iterable["ActionType"]],
-          get_state: typ.Callable[["StateType", "ActionType"], "StateType"],
-          get_cost: typ.Callable[["StateType", "ActionType"], "CostType"],
-          get_heuristic: typ.Callable[["StateType"], "CostType"] = None,
+StateType = Any
+CostType = Any
+ActionType = Any
+def astar_graph(initial_state: StateType,
+          initial_cost: CostType,
+          is_goal: Callable[[StateType], bool],
+          get_actions: Callable[[StateType], Iterable[ActionType]],
+          get_state: Callable[[StateType, ActionType], StateType],
+          get_cost: Callable[[StateType, ActionType], CostType],
+          get_heuristic: Callable[[StateType], CostType] = None,
           include_total_cost = False
           ):
+    """
+    Actions, states and costs can be of any type
+    States must always be of a hashable type
+    The objects returned by the cost functions must be comparable (>, ==, etc.) and support addition with each other
+
+    Parameters:
+    - initial_state (StateType): the initial state
+    - initial_cost (CostType): total cost of initial_state
+    - is_goal: Function is_goal(state) -> bool returns True if state suffices goal conditions
+    - get_actions: Function get_actions(state) -> Iterable(Actions): Given a state, return all actions that can be used to get a next state
+    - get_state: Function get_state(state, action) -> new_state: Given a state and an action that is taken (the action will always be one that was returned by get_actions) to receive the next state
+    - get_cost: Function get_cost(state, action) -> cost: The cost of taking action at state
+    - get_heuristic: Function get_heuristic(state) -> cost: Minimum (lower bound) cost expected to reach a goal from state
+    - include_total_cost: if True a tuple will be returned of (result, total_cost)
+
+    Returns:
+    - result: List of (state, action) pairs with the action taken at the state; last action is None
+    - if include_total_cost is True: returns tuple (list, total_cost)
+    """
     def goal_test_fun(state_node: py_search.base.Node):
         state = state_node.state
         if not state:
