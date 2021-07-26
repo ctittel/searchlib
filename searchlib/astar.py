@@ -21,14 +21,15 @@ class _Problem(py_search.base.Problem):
 StateType = Any
 CostType = Any
 ActionType = Any
-def astar_graph(initial_state: StateType,
+def astar(initial_state: StateType,
           initial_cost: CostType,
           is_goal: Callable[[StateType], bool],
           get_actions: Callable[[StateType], Iterable[ActionType]],
           get_state: Callable[[StateType, ActionType], StateType],
           get_cost: Callable[[StateType, ActionType], CostType],
           get_heuristic: Callable[[StateType], CostType] = None,
-          include_total_cost = False
+          graph_search: bool =False,
+          include_total_cost: bool = False,
           ):
     """
     Actions, states and costs can be of any type
@@ -69,7 +70,7 @@ def astar_graph(initial_state: StateType,
     problem = _Problem(initial_state, initial_cost, goal_test_fun, successors_fun, get_heuristic)
 
     solution_node = None
-    for result in best_first_search(problem=problem, graph=True, backward=False, forward=True):
+    for result in best_first_search(problem=problem, graph=graph_search, backward=False, forward=True):
         solution_node = result
         break
 
