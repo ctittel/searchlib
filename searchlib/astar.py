@@ -28,7 +28,7 @@ def astar(initial_state: StateType,
           get_state: Callable[[StateType, ActionType], StateType],
           get_cost: Callable[[StateType, ActionType], CostType],
           get_heuristic: Callable[[StateType], CostType] = None,
-          graph_search: bool =False,
+          graph_search: bool = False,
           include_total_cost: bool = False,
           ):
     """
@@ -51,10 +51,7 @@ def astar(initial_state: StateType,
     - if include_total_cost is True: returns tuple (list, total_cost)
     """
     def goal_test_fun(state_node: py_search.base.Node):
-        state = state_node.state
-        if not state:
-            return False
-        return is_goal(state)
+        return is_goal(state_node.state)
 
     def successors_fun(node: py_search.base.Node):
         for action in get_actions(node.state):
@@ -74,7 +71,7 @@ def astar(initial_state: StateType,
         solution_node = result
         break
 
-    if solution_node:
+    if solution_node != None:
         states = []
         actions = []
         node = solution_node.state_node
