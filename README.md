@@ -1,11 +1,11 @@
 # searchlib
 
 ## Principles:
-- Try to design API in a *pythonic* way
-- The simplest way is probably to implement the search algorithms as functions that take normal and function parameters
-- Don't require the user to create child-classes
-    - Different search algorithms may require very different parameters, so having a base class with methods the user must override will eventually create problems because methods certain search algorithms require may be missing or methods may be interpreted in different ways depending on the search algorithm used
-- When possible allow the user to use any type of cost type (not necessarily floats), with the only prerequisite being that all returned costs/heuristics can be compared with operands like `==` and `>` (responsibility of the user)
+- *pythonic* API
+- search algorithms take objects & function parameters
+- free to use any kind of types for all objects (for the states, actions and even the costs); never force the user to use a certain type for something or to create a child class of something
+- in some algorithms some of these types are required to have certain properties, e.g. being hashable. Costs must always be comparable (with `==`, `>`, etc. - `total-ordering`)
+
 
 ## Installation
 `pip3 install git+git://github.com/ctittel/searchlib`
