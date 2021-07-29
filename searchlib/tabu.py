@@ -27,20 +27,26 @@ def tabu(
     
     tabu_list = [initial_solution]
 
-    while not stopping_condition(best, best_fitness):
-        neighbors = list(get_neighbors(best_candidate))
+    # TODO: Have made some adaptions; check if they are good
+    while not stopping_condition(best=best, fitness=best_fitness):
+        neighbors = get_neighbors(best_candidate)
         if len(neighbors) == 0:
             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")
-        
-        best_candidate = neighbors[0]
+        neighbors = filter(lambda x: x not in tabu_list, neighbors)
+        neighbors = list(neighbors)
+        if len(neighbors) == 0:
+            return best
+
+        assert best_candidate != neighbors[0]
+        best_candidate = neighbors.pop(0)
         best_candidate_fitness = get_fitness(best_candidate)
 
-        for candidate in neighbors[1:]:
-            if candidate not in tabu_list:
-                candidate_fitness = get_fitness(candidate)
-                if candidate_fitness > best_candidate_fitness:
-                    best_candidate = candidate
-                    best_candidate_fitness = candidate_fitness
+        for candidate in neighbors:
+            assert candidate != best_candidate
+            candidate_fitness = get_fitness(candidate)
+            if candidate_fitness > best_candidate_fitness:
+                best_candidate = candidate
+                best_candidate_fitness = candidate_fitness
 
         if best_candidate_fitness > best_fitness:
             best = best_candidate
@@ -48,5 +54,5 @@ def tabu(
 
         tabu_list.append(best_candidate)
         if len(tabu_list) > max_tabu_list_len:
-            tabu_list = tabu_list[1:]
+            tabu_list.pop(0)
     return best
