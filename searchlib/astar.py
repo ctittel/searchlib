@@ -29,6 +29,7 @@ def astar(initial_state: StateType,
           get_cost: Callable[[StateType, ActionType], CostType],
           get_heuristic: Callable[[StateType], CostType] = None,
           graph_search: bool = False,
+          include_states: bool = True,
           include_total_cost: bool = False,
           ):
     """
@@ -44,6 +45,9 @@ def astar(initial_state: StateType,
     - get_state: Function get_state(state, action) -> new_state: Given a state and an action that is taken (the action will always be one that was returned by get_actions) to receive the next state
     - get_cost: Function get_cost(state, action) -> cost: The cost of taking action at state
     - get_heuristic: Function get_heuristic(state) -> cost: Minimum (lower bound) cost expected to reach a goal from state
+    - include_states: 
+        - If False, the function returns the list of actions which must be taken from initial_state to reach goal
+        - If True, the function returns a list of (state, action) pairs where the last action is None 
     - include_total_cost: if True a tuple will be returned of (result, total_cost)
 
     Returns:
@@ -80,9 +84,15 @@ def astar(initial_state: StateType,
             actions.append(node.action)
             node = node.parent
 
-        actions = [None] + actions[:-1]
+        actions = actions[:-1] # remove last one (= first one) for some reason
+        actions = reversed(actions)
+        states = reversed(states)
 
-        result = list(reversed(list(zip(states, actions))))
+        result = actions
+        if include_states:
+            actions += [None]
+            result = list(zip(states, actions))
+
         if include_total_cost:
             return (result, solution_node.cost())
         else:
