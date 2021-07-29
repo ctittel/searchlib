@@ -85,8 +85,8 @@ def astar(initial_state: StateType,
             node = node.parent
 
         actions = actions[:-1] # remove last one (= first one) for some reason
-        actions = reversed(actions)
-        states = reversed(states)
+        actions = list(reversed(actions))
+        states = list(reversed(states))
 
         result = actions
         if include_states:
