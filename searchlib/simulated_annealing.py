@@ -38,6 +38,8 @@ def simulated_annealing(initial_solution: SolutionType,
         - checkout description of the algorithm to understand
         - by default uses Kirkpatrick et al.'s algorithm
     - random_fn: By default, returns uniformly random floats between [0.0, 1.0)
+
+    If the used energy type is not a number but of a custom type, a custom implementation of the acceptance_probability_fn must be used
     """
     s = initial_solution
     E = energy_fn(s)
