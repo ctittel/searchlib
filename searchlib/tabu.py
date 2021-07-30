@@ -8,7 +8,8 @@ def tabu(
     get_neighbors: Callable[[SolutionType], Iterable[SolutionType]],
     get_fitness: Callable[[SolutionType], FitnessType],
     stopping_condition: Callable[[SolutionType, FitnessType], bool],
-    max_tabu_list_len: int = 100
+    max_tabu_list_len: int = 100,
+    include_best_fitness: bool = False
 ):
     """
     SolutionType can be anything that can be anything that can be handeled by the corresponding callback functions.
@@ -20,6 +21,7 @@ def tabu(
     - get_fitness: Function get_fitness(solution) -> cost: Fitness of the given solution (a CostType)
     - stopping_condition: Function stopping_condition(best_solution, best_solution_fitness) -> bool: Called every iteration; if it returns true, the search will be stopped. Users can implement this as they want. The condition may for example use a time or iteration limit, threshold on fitness improvement etc.
     - max_tabu_list_len: How long the tabu list may get before entries are removed
+    - include_total_cost: If true, returns a tuple (best solution, best solution's fitness); otherwise, only the best solution is returned
     """
     best = initial_solution
     best_fitness = get_fitness(best)
@@ -32,8 +34,7 @@ def tabu(
         neighbors = get_neighbors(best_candidate)
         if len(neighbors) == 0:
             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")
-        neighbors = filter(lambda x: x not in tabu_list, neighbors)
-        neighbors = list(neighbors)
+        neighbors = [x for x in neighbors if x not in tabu_list]
         if len(neighbors) == 0:
             return best
 
@@ -55,4 +56,7 @@ def tabu(
         tabu_list.append(best_candidate)
         if len(tabu_list) > max_tabu_list_len:
             tabu_list.pop(0)
+
+    if include_best_fitness:
+        return (best, best_fitness)
     return best
