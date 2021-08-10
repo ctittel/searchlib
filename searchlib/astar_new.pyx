@@ -1,11 +1,9 @@
-import heapq
 from functools import total_ordering
-from typing import Callable, Iterable, Any
+from typing import Callable, Iterable, Any, List, Tuple
 import cython
 
-@cython.cfunc
-def reconstruct_path(came_from: dict, current_state, initial_state):
-    total_path = [(current_state, None)]
+cdef reconstruct_path(came_from: dict, current_state: object, initial_state: object):
+    total_path: List[Tuple] = [(current_state, None)]
     while current_state in came_from:
         x = came_from[current_state]
         total_path.append(x)
@@ -13,45 +11,51 @@ def reconstruct_path(came_from: dict, current_state, initial_state):
     assert current_state == initial_state
     return list(reversed(total_path))
 
+cdef class Node:
+    cdef public object state
+    cdef public object cost
+    cdef public bint active
 
-@total_ordering
-class Node:
-    def __init__(self, state, cost, active=True):
+    def __cinit__(self, state: object, cost: object, active: bool=True):
         self.state = state
         self.cost = cost
         self.active = True
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.cost == other.cost
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         return self.cost > other.cost
 
     def __hash__(self):
         return hash(self.state)
 
-class MyMinHeap:
-    def __init__(self):
-        self.d = dict()
-        self.l = list()
-        heapq.heapify(self.l)
+cdef class MyMinHeap:
+    cdef dict d
+    cdef list l
 
-    def push(self, state, cost):
+    def __init__(self):
+        self.l = []
+        self.d = {}
+
+    cdef push(self, state: object, cost: object):
         if state in self.d:
             self.d[state].active=False
         node = Node(state, cost)
         self.d[state] = node
-        heapq.heappush(self.l, node)
+        self.l.append(node)
+        self.l = sorted(self.l)
 
-    def pop(self):
-        while True:
-            node = heapq.heappop(self.l)
+    cdef cython.object pop(self):
+        while len(self.l):
+            node = self.l.pop(0)
             if node.active == True:
                 return node.state
+        return None # empty
 
-StateType = Any
-CostType = Any
-ActionType = Any
+StateType = object
+CostType = object
+ActionType = object
 
 def astar(initial_state: StateType,
           initial_cost: CostType,
@@ -93,28 +97,44 @@ def astar(initial_state: StateType,
         def f(g_cost, state):
             return g_cost
 
-    open_set = MyMinHeap()
+    return _astar(initial_state, initial_cost, is_goal, get_actions, get_state, get_cost, f, graph_search, include_states, include_total_cost)
+
+@cython.cfunc
+def _astar(initial_state,
+          initial_cost,
+          is_goal,
+          get_actions,
+          get_state,
+          get_cost,
+          f,
+          graph_search: bool,
+          include_states: bool,
+          include_total_cost: bool,
+          ):
+    open_set: MyMinHeap = MyMinHeap()
     open_set.push(initial_state, f(initial_cost, initial_state))
-    came_from = {}
-    g_scores = {initial_state: initial_cost}
+    came_from: dict = {}
+    g_scores: dict = {initial_state: initial_cost}
 
     while True:
         current_state = open_set.pop()
+        if current_state == None:
+            raise Exception("No path found!")
 
-        g_current = g_scores[current_state]
+        g_current: object = g_scores[current_state]
         if is_goal(current_state):
             path = reconstruct_path(came_from, current_state, initial_state)
             if include_states == False:
                 _states, actions = zip(*path)
-                path = actions[:-1]
+                path: list = actions[:-1]
             if include_total_cost:
                 return (path, g_current)
             else:
                 return path
         for action in get_actions(current_state):
-            g_cost = get_cost(current_state, action)
-            next_state = get_state(current_state, action)
-            g_score = g_current + g_cost
+            g_cost: object = get_cost(current_state, action)
+            next_state: object = get_state(current_state, action)
+            g_score: object = g_current + g_cost
             if (next_state not in g_scores) or (g_score < g_scores[next_state]):
                 came_from[next_state] = (current_state, action)
                 g_scores[next_state] = g_score
