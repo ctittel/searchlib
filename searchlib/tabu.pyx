@@ -25,6 +25,17 @@ def tabu(
     - max_tabu_list_len: How long the tabu list may get before entries are removed
     - include_total_cost: If true, returns a tuple (best solution, best solution's fitness); otherwise, only the best solution is returned
     """
+    return _tabu(initial_solution, get_neighbors, get_fitness, stopping_condition, max_tabu_list_len, include_best_fitness)
+
+@cython.cfunc
+def _tabu(
+    initial_solution,
+    get_neighbors,
+    get_fitness,
+    stopping_condition,
+    max_tabu_list_len: int,
+    include_best_fitness: bool
+):
     best = initial_solution
     best_fitness = get_fitness(best)
     best_candidate = initial_solution

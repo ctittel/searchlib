@@ -1249,12 +1249,12 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 /* Module declarations from 'cython' */
 
 /* Module declarations from 'searchlib.tabu' */
+static PyObject *__pyx_f_9searchlib_4tabu__tabu(PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, PyObject *); /*proto*/
 #define __Pyx_MODULE_NAME "searchlib.tabu"
 extern int __pyx_module_is_main_searchlib__tabu;
 int __pyx_module_is_main_searchlib__tabu = 0;
 
 /* Implementation of 'searchlib.tabu' */
-static const char __pyx_k_x[] = "x";
 static const char __pyx_k_Any[] = "Any";
 static const char __pyx_k_pop[] = "pop";
 static const char __pyx_k_best[] = "best";
@@ -1267,25 +1267,18 @@ static const char __pyx_k_typing[] = "typing";
 static const char __pyx_k_fitness[] = "fitness";
 static const char __pyx_k_Callable[] = "Callable";
 static const char __pyx_k_Iterable[] = "Iterable";
-static const char __pyx_k_candidate[] = "candidate";
-static const char __pyx_k_neighbors[] = "neighbors";
-static const char __pyx_k_tabu_list[] = "tabu_list";
 static const char __pyx_k_FitnessType[] = "FitnessType";
 static const char __pyx_k_get_fitness[] = "get_fitness";
 static const char __pyx_k_SolutionType[] = "SolutionType";
-static const char __pyx_k_best_fitness[] = "best_fitness";
 static const char __pyx_k_get_neighbors[] = "get_neighbors";
-static const char __pyx_k_best_candidate[] = "best_candidate";
 static const char __pyx_k_searchlib_tabu[] = "searchlib.tabu";
 static const char __pyx_k_get_neighbors_2[] = "get_neighbors(";
 static const char __pyx_k_initial_solution[] = "initial_solution";
-static const char __pyx_k_candidate_fitness[] = "candidate_fitness";
 static const char __pyx_k_max_tabu_list_len[] = "max_tabu_list_len";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_searchlib_tabu_pyx[] = "searchlib/tabu.pyx";
 static const char __pyx_k_stopping_condition[] = "stopping_condition";
 static const char __pyx_k_include_best_fitness[] = "include_best_fitness";
-static const char __pyx_k_best_candidate_fitness[] = "best_candidate_fitness";
 static const char __pyx_k_returned_no_objects_Need_neighb[] = ") returned no objects! Need neighbors";
 static PyObject *__pyx_n_s_Any;
 static PyObject *__pyx_n_s_Callable;
@@ -1293,11 +1286,6 @@ static PyObject *__pyx_n_s_FitnessType;
 static PyObject *__pyx_n_s_Iterable;
 static PyObject *__pyx_n_s_SolutionType;
 static PyObject *__pyx_n_s_best;
-static PyObject *__pyx_n_s_best_candidate;
-static PyObject *__pyx_n_s_best_candidate_fitness;
-static PyObject *__pyx_n_s_best_fitness;
-static PyObject *__pyx_n_s_candidate;
-static PyObject *__pyx_n_s_candidate_fitness;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_fitness;
 static PyObject *__pyx_n_s_get_fitness;
@@ -1309,17 +1297,14 @@ static PyObject *__pyx_n_s_initial_solution;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_max_tabu_list_len;
 static PyObject *__pyx_n_s_name;
-static PyObject *__pyx_n_s_neighbors;
 static PyObject *__pyx_n_s_pop;
 static PyObject *__pyx_kp_u_returned_no_objects_Need_neighb;
 static PyObject *__pyx_n_s_searchlib_tabu;
 static PyObject *__pyx_kp_s_searchlib_tabu_pyx;
 static PyObject *__pyx_n_s_stopping_condition;
 static PyObject *__pyx_n_s_tabu;
-static PyObject *__pyx_n_s_tabu_list;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_typing;
-static PyObject *__pyx_n_s_x;
 static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_initial_solution, PyObject *__pyx_v_get_neighbors, PyObject *__pyx_v_get_fitness, PyObject *__pyx_v_stopping_condition, PyObject *__pyx_v_max_tabu_list_len, PyObject *__pyx_v_include_best_fitness); /* proto */
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_100;
@@ -1468,6 +1453,56 @@ static PyObject *__pyx_pw_9searchlib_4tabu_1tabu(PyObject *__pyx_self, PyObject 
 }
 
 static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_initial_solution, PyObject *__pyx_v_get_neighbors, PyObject *__pyx_v_get_fitness, PyObject *__pyx_v_stopping_condition, PyObject *__pyx_v_max_tabu_list_len, PyObject *__pyx_v_include_best_fitness) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("tabu", 0);
+
+  /* "searchlib/tabu.pyx":28
+ *     - include_total_cost: If true, returns a tuple (best solution, best solution's fitness); otherwise, only the best solution is returned
+ *     """
+ *     return _tabu(initial_solution, get_neighbors, get_fitness, stopping_condition, max_tabu_list_len, include_best_fitness)             # <<<<<<<<<<<<<<
+ * 
+ * @cython.cfunc
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_9searchlib_4tabu__tabu(__pyx_v_initial_solution, __pyx_v_get_neighbors, __pyx_v_get_fitness, __pyx_v_stopping_condition, __pyx_v_max_tabu_list_len, __pyx_v_include_best_fitness); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "searchlib/tabu.pyx":8
+ * SolutionType = Any
+ * FitnessType = Any
+ * def tabu(             # <<<<<<<<<<<<<<
+ *     initial_solution: SolutionType,
+ *     get_neighbors: Callable[[SolutionType], Iterable[SolutionType]],
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("searchlib.tabu.tabu", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "searchlib/tabu.pyx":31
+ * 
+ * @cython.cfunc
+ * def _tabu(             # <<<<<<<<<<<<<<
+ *     initial_solution,
+ *     get_neighbors,
+ */
+
+static PyObject *__pyx_f_9searchlib_4tabu__tabu(PyObject *__pyx_v_initial_solution, PyObject *__pyx_v_get_neighbors, PyObject *__pyx_v_get_fitness, PyObject *__pyx_v_stopping_condition, PyObject *__pyx_v_max_tabu_list_len, PyObject *__pyx_v_include_best_fitness) {
   PyObject *__pyx_v_best = NULL;
   PyObject *__pyx_v_best_fitness = NULL;
   PyObject *__pyx_v_best_candidate = NULL;
@@ -1492,11 +1527,11 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("tabu", 0);
+  __Pyx_RefNannySetupContext("_tabu", 0);
 
-  /* "searchlib/tabu.pyx":28
- *     - include_total_cost: If true, returns a tuple (best solution, best solution's fitness); otherwise, only the best solution is returned
- *     """
+  /* "searchlib/tabu.pyx":39
+ *     include_best_fitness: bool
+ * ):
  *     best = initial_solution             # <<<<<<<<<<<<<<
  *     best_fitness = get_fitness(best)
  *     best_candidate = initial_solution
@@ -1504,8 +1539,8 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
   __Pyx_INCREF(__pyx_v_initial_solution);
   __pyx_v_best = __pyx_v_initial_solution;
 
-  /* "searchlib/tabu.pyx":29
- *     """
+  /* "searchlib/tabu.pyx":40
+ * ):
  *     best = initial_solution
  *     best_fitness = get_fitness(best)             # <<<<<<<<<<<<<<
  *     best_candidate = initial_solution
@@ -1524,13 +1559,13 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_best) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_best);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_best_fitness = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "searchlib/tabu.pyx":30
+  /* "searchlib/tabu.pyx":41
  *     best = initial_solution
  *     best_fitness = get_fitness(best)
  *     best_candidate = initial_solution             # <<<<<<<<<<<<<<
@@ -1540,14 +1575,14 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
   __Pyx_INCREF(__pyx_v_initial_solution);
   __pyx_v_best_candidate = __pyx_v_initial_solution;
 
-  /* "searchlib/tabu.pyx":32
+  /* "searchlib/tabu.pyx":43
  *     best_candidate = initial_solution
  * 
  *     tabu_list = [initial_solution]             # <<<<<<<<<<<<<<
  * 
  *     # TODO: Have made some adaptions; check if they are good
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_initial_solution);
   __Pyx_GIVEREF(__pyx_v_initial_solution);
@@ -1555,7 +1590,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_v_tabu_list = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "searchlib/tabu.pyx":35
+  /* "searchlib/tabu.pyx":46
  * 
  *     # TODO: Have made some adaptions; check if they are good
  *     while not stopping_condition(best=best, fitness=best_fitness):             # <<<<<<<<<<<<<<
@@ -1563,19 +1598,19 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  *         if len(neighbors) == 0:
  */
   while (1) {
-    __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_best, __pyx_v_best) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_fitness, __pyx_v_best_fitness) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_v_stopping_condition, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_best, __pyx_v_best) < 0) __PYX_ERR(0, 46, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_fitness, __pyx_v_best_fitness) < 0) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_v_stopping_condition, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 35, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_5 = ((!__pyx_t_4) != 0);
     if (!__pyx_t_5) break;
 
-    /* "searchlib/tabu.pyx":36
+    /* "searchlib/tabu.pyx":47
  *     # TODO: Have made some adaptions; check if they are good
  *     while not stopping_condition(best=best, fitness=best_fitness):
  *         neighbors = get_neighbors(best_candidate)             # <<<<<<<<<<<<<<
@@ -1595,31 +1630,31 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
     }
     __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_3, __pyx_v_best_candidate) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_best_candidate);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_XDECREF_SET(__pyx_v_neighbors, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "searchlib/tabu.pyx":37
+    /* "searchlib/tabu.pyx":48
  *     while not stopping_condition(best=best, fitness=best_fitness):
  *         neighbors = get_neighbors(best_candidate)
  *         if len(neighbors) == 0:             # <<<<<<<<<<<<<<
  *             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")
  *         neighbors = [x for x in neighbors if x not in tabu_list]
  */
-    __pyx_t_6 = PyObject_Length(__pyx_v_neighbors); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_6 = PyObject_Length(__pyx_v_neighbors); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 48, __pyx_L1_error)
     __pyx_t_5 = ((__pyx_t_6 == 0) != 0);
     if (unlikely(__pyx_t_5)) {
 
-      /* "searchlib/tabu.pyx":38
+      /* "searchlib/tabu.pyx":49
  *         neighbors = get_neighbors(best_candidate)
  *         if len(neighbors) == 0:
  *             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")             # <<<<<<<<<<<<<<
  *         neighbors = [x for x in neighbors if x not in tabu_list]
  *         if len(neighbors) == 0:
  */
-      __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_6 = 0;
       __pyx_t_7 = 127;
@@ -1627,7 +1662,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
       __pyx_t_6 += 14;
       __Pyx_GIVEREF(__pyx_kp_u_get_neighbors_2);
       PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_get_neighbors_2);
-      __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_best_candidate, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_best_candidate, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_7 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_7) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_7;
       __pyx_t_6 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
@@ -1638,17 +1673,17 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
       __pyx_t_6 += 37;
       __Pyx_GIVEREF(__pyx_kp_u_returned_no_objects_Need_neighb);
       PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u_returned_no_objects_Need_neighb);
-      __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_Raise(__pyx_t_2, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __PYX_ERR(0, 38, __pyx_L1_error)
+      __PYX_ERR(0, 49, __pyx_L1_error)
 
-      /* "searchlib/tabu.pyx":37
+      /* "searchlib/tabu.pyx":48
  *     while not stopping_condition(best=best, fitness=best_fitness):
  *         neighbors = get_neighbors(best_candidate)
  *         if len(neighbors) == 0:             # <<<<<<<<<<<<<<
@@ -1657,39 +1692,39 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  */
     }
 
-    /* "searchlib/tabu.pyx":39
+    /* "searchlib/tabu.pyx":50
  *         if len(neighbors) == 0:
  *             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")
  *         neighbors = [x for x in neighbors if x not in tabu_list]             # <<<<<<<<<<<<<<
  *         if len(neighbors) == 0:
  *             return best
  */
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (likely(PyList_CheckExact(__pyx_v_neighbors)) || PyTuple_CheckExact(__pyx_v_neighbors)) {
       __pyx_t_1 = __pyx_v_neighbors; __Pyx_INCREF(__pyx_t_1); __pyx_t_6 = 0;
       __pyx_t_8 = NULL;
     } else {
-      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_neighbors); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
+      __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_neighbors); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 39, __pyx_L1_error)
+      __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 50, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_8)) {
         if (likely(PyList_CheckExact(__pyx_t_1))) {
           if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_1)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 39, __pyx_L1_error)
+          __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 50, __pyx_L1_error)
           #else
-          __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           #endif
         } else {
           if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 39, __pyx_L1_error)
+          __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 50, __pyx_L1_error)
           #else
-          __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           #endif
         }
@@ -1699,7 +1734,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 39, __pyx_L1_error)
+            else __PYX_ERR(0, 50, __pyx_L1_error)
           }
           break;
         }
@@ -1707,28 +1742,28 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
       }
       __Pyx_XDECREF_SET(__pyx_v_x, __pyx_t_3);
       __pyx_t_3 = 0;
-      __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_x, __pyx_v_tabu_list, Py_NE)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 39, __pyx_L1_error)
+      __pyx_t_5 = (__Pyx_PySequence_ContainsTF(__pyx_v_x, __pyx_v_tabu_list, Py_NE)); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 50, __pyx_L1_error)
       __pyx_t_4 = (__pyx_t_5 != 0);
       if (__pyx_t_4) {
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_v_x))) __PYX_ERR(0, 39, __pyx_L1_error)
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_v_x))) __PYX_ERR(0, 50, __pyx_L1_error)
       }
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF_SET(__pyx_v_neighbors, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "searchlib/tabu.pyx":40
+    /* "searchlib/tabu.pyx":51
  *             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")
  *         neighbors = [x for x in neighbors if x not in tabu_list]
  *         if len(neighbors) == 0:             # <<<<<<<<<<<<<<
  *             return best
  * 
  */
-    __pyx_t_6 = PyObject_Length(__pyx_v_neighbors); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 40, __pyx_L1_error)
+    __pyx_t_6 = PyObject_Length(__pyx_v_neighbors); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 51, __pyx_L1_error)
     __pyx_t_4 = ((__pyx_t_6 == 0) != 0);
     if (__pyx_t_4) {
 
-      /* "searchlib/tabu.pyx":41
+      /* "searchlib/tabu.pyx":52
  *         neighbors = [x for x in neighbors if x not in tabu_list]
  *         if len(neighbors) == 0:
  *             return best             # <<<<<<<<<<<<<<
@@ -1740,7 +1775,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
       __pyx_r = __pyx_v_best;
       goto __pyx_L0;
 
-      /* "searchlib/tabu.pyx":40
+      /* "searchlib/tabu.pyx":51
  *             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")
  *         neighbors = [x for x in neighbors if x not in tabu_list]
  *         if len(neighbors) == 0:             # <<<<<<<<<<<<<<
@@ -1749,7 +1784,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  */
     }
 
-    /* "searchlib/tabu.pyx":43
+    /* "searchlib/tabu.pyx":54
  *             return best
  * 
  *         assert best_candidate != neighbors[0]             # <<<<<<<<<<<<<<
@@ -1758,32 +1793,32 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  */
     #ifndef CYTHON_WITHOUT_ASSERTIONS
     if (unlikely(!Py_OptimizeFlag)) {
-      __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_neighbors, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 43, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_neighbors, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_1 = PyObject_RichCompare(__pyx_v_best_candidate, __pyx_t_2, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+      __pyx_t_1 = PyObject_RichCompare(__pyx_v_best_candidate, __pyx_t_2, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (unlikely(!__pyx_t_4)) {
         PyErr_SetNone(PyExc_AssertionError);
-        __PYX_ERR(0, 43, __pyx_L1_error)
+        __PYX_ERR(0, 54, __pyx_L1_error)
       }
     }
     #endif
 
-    /* "searchlib/tabu.pyx":44
+    /* "searchlib/tabu.pyx":55
  * 
  *         assert best_candidate != neighbors[0]
  *         best_candidate = neighbors.pop(0)             # <<<<<<<<<<<<<<
  *         best_candidate_fitness = get_fitness(best_candidate)
  * 
  */
-    __pyx_t_1 = __Pyx_PyList_PopIndex(__pyx_v_neighbors, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyList_PopIndex(__pyx_v_neighbors, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_best_candidate, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "searchlib/tabu.pyx":45
+    /* "searchlib/tabu.pyx":56
  *         assert best_candidate != neighbors[0]
  *         best_candidate = neighbors.pop(0)
  *         best_candidate_fitness = get_fitness(best_candidate)             # <<<<<<<<<<<<<<
@@ -1803,13 +1838,13 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
     }
     __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_best_candidate) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_best_candidate);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_XDECREF_SET(__pyx_v_best_candidate_fitness, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "searchlib/tabu.pyx":47
+    /* "searchlib/tabu.pyx":58
  *         best_candidate_fitness = get_fitness(best_candidate)
  * 
  *         for candidate in neighbors:             # <<<<<<<<<<<<<<
@@ -1820,15 +1855,15 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
     for (;;) {
       if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_1)) break;
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-      __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
+      __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 58, __pyx_L1_error)
       #else
-      __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
+      __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       #endif
       __Pyx_XDECREF_SET(__pyx_v_candidate, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "searchlib/tabu.pyx":48
+      /* "searchlib/tabu.pyx":59
  * 
  *         for candidate in neighbors:
  *             assert candidate != best_candidate             # <<<<<<<<<<<<<<
@@ -1837,17 +1872,17 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  */
       #ifndef CYTHON_WITHOUT_ASSERTIONS
       if (unlikely(!Py_OptimizeFlag)) {
-        __pyx_t_2 = PyObject_RichCompare(__pyx_v_candidate, __pyx_v_best_candidate, Py_NE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
-        __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 48, __pyx_L1_error)
+        __pyx_t_2 = PyObject_RichCompare(__pyx_v_candidate, __pyx_v_best_candidate, Py_NE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         if (unlikely(!__pyx_t_4)) {
           PyErr_SetNone(PyExc_AssertionError);
-          __PYX_ERR(0, 48, __pyx_L1_error)
+          __PYX_ERR(0, 59, __pyx_L1_error)
         }
       }
       #endif
 
-      /* "searchlib/tabu.pyx":49
+      /* "searchlib/tabu.pyx":60
  *         for candidate in neighbors:
  *             assert candidate != best_candidate
  *             candidate_fitness = get_fitness(candidate)             # <<<<<<<<<<<<<<
@@ -1867,25 +1902,25 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
       }
       __pyx_t_2 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_9, __pyx_v_candidate) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_candidate);
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 49, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_XDECREF_SET(__pyx_v_candidate_fitness, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "searchlib/tabu.pyx":50
+      /* "searchlib/tabu.pyx":61
  *             assert candidate != best_candidate
  *             candidate_fitness = get_fitness(candidate)
  *             if candidate_fitness > best_candidate_fitness:             # <<<<<<<<<<<<<<
  *                 best_candidate = candidate
  *                 best_candidate_fitness = candidate_fitness
  */
-      __pyx_t_2 = PyObject_RichCompare(__pyx_v_candidate_fitness, __pyx_v_best_candidate_fitness, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
-      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 50, __pyx_L1_error)
+      __pyx_t_2 = PyObject_RichCompare(__pyx_v_candidate_fitness, __pyx_v_best_candidate_fitness, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 61, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       if (__pyx_t_4) {
 
-        /* "searchlib/tabu.pyx":51
+        /* "searchlib/tabu.pyx":62
  *             candidate_fitness = get_fitness(candidate)
  *             if candidate_fitness > best_candidate_fitness:
  *                 best_candidate = candidate             # <<<<<<<<<<<<<<
@@ -1895,7 +1930,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
         __Pyx_INCREF(__pyx_v_candidate);
         __Pyx_DECREF_SET(__pyx_v_best_candidate, __pyx_v_candidate);
 
-        /* "searchlib/tabu.pyx":52
+        /* "searchlib/tabu.pyx":63
  *             if candidate_fitness > best_candidate_fitness:
  *                 best_candidate = candidate
  *                 best_candidate_fitness = candidate_fitness             # <<<<<<<<<<<<<<
@@ -1905,7 +1940,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
         __Pyx_INCREF(__pyx_v_candidate_fitness);
         __Pyx_DECREF_SET(__pyx_v_best_candidate_fitness, __pyx_v_candidate_fitness);
 
-        /* "searchlib/tabu.pyx":50
+        /* "searchlib/tabu.pyx":61
  *             assert candidate != best_candidate
  *             candidate_fitness = get_fitness(candidate)
  *             if candidate_fitness > best_candidate_fitness:             # <<<<<<<<<<<<<<
@@ -1914,7 +1949,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  */
       }
 
-      /* "searchlib/tabu.pyx":47
+      /* "searchlib/tabu.pyx":58
  *         best_candidate_fitness = get_fitness(best_candidate)
  * 
  *         for candidate in neighbors:             # <<<<<<<<<<<<<<
@@ -1924,19 +1959,19 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "searchlib/tabu.pyx":54
+    /* "searchlib/tabu.pyx":65
  *                 best_candidate_fitness = candidate_fitness
  * 
  *         if best_candidate_fitness > best_fitness:             # <<<<<<<<<<<<<<
  *             best = best_candidate
  *             best_fitness = best_candidate_fitness
  */
-    __pyx_t_1 = PyObject_RichCompare(__pyx_v_best_candidate_fitness, __pyx_v_best_fitness, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 54, __pyx_L1_error)
+    __pyx_t_1 = PyObject_RichCompare(__pyx_v_best_candidate_fitness, __pyx_v_best_fitness, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 65, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_4) {
 
-      /* "searchlib/tabu.pyx":55
+      /* "searchlib/tabu.pyx":66
  * 
  *         if best_candidate_fitness > best_fitness:
  *             best = best_candidate             # <<<<<<<<<<<<<<
@@ -1946,7 +1981,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
       __Pyx_INCREF(__pyx_v_best_candidate);
       __Pyx_DECREF_SET(__pyx_v_best, __pyx_v_best_candidate);
 
-      /* "searchlib/tabu.pyx":56
+      /* "searchlib/tabu.pyx":67
  *         if best_candidate_fitness > best_fitness:
  *             best = best_candidate
  *             best_fitness = best_candidate_fitness             # <<<<<<<<<<<<<<
@@ -1956,7 +1991,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
       __Pyx_INCREF(__pyx_v_best_candidate_fitness);
       __Pyx_DECREF_SET(__pyx_v_best_fitness, __pyx_v_best_candidate_fitness);
 
-      /* "searchlib/tabu.pyx":54
+      /* "searchlib/tabu.pyx":65
  *                 best_candidate_fitness = candidate_fitness
  * 
  *         if best_candidate_fitness > best_fitness:             # <<<<<<<<<<<<<<
@@ -1965,43 +2000,43 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  */
     }
 
-    /* "searchlib/tabu.pyx":58
+    /* "searchlib/tabu.pyx":69
  *             best_fitness = best_candidate_fitness
  * 
  *         tabu_list.append(best_candidate)             # <<<<<<<<<<<<<<
  *         if len(tabu_list) > max_tabu_list_len:
  *             tabu_list.pop(0)
  */
-    __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_tabu_list, __pyx_v_best_candidate); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 58, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_tabu_list, __pyx_v_best_candidate); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 69, __pyx_L1_error)
 
-    /* "searchlib/tabu.pyx":59
+    /* "searchlib/tabu.pyx":70
  * 
  *         tabu_list.append(best_candidate)
  *         if len(tabu_list) > max_tabu_list_len:             # <<<<<<<<<<<<<<
  *             tabu_list.pop(0)
  * 
  */
-    __pyx_t_6 = PyList_GET_SIZE(__pyx_v_tabu_list); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 59, __pyx_L1_error)
-    __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+    __pyx_t_6 = PyList_GET_SIZE(__pyx_v_tabu_list); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 70, __pyx_L1_error)
+    __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, __pyx_v_max_tabu_list_len, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+    __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, __pyx_v_max_tabu_list_len, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 70, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_4) {
 
-      /* "searchlib/tabu.pyx":60
+      /* "searchlib/tabu.pyx":71
  *         tabu_list.append(best_candidate)
  *         if len(tabu_list) > max_tabu_list_len:
  *             tabu_list.pop(0)             # <<<<<<<<<<<<<<
  * 
  *     if include_best_fitness:
  */
-      __pyx_t_2 = __Pyx_PyList_PopIndex(__pyx_v_tabu_list, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyList_PopIndex(__pyx_v_tabu_list, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "searchlib/tabu.pyx":59
+      /* "searchlib/tabu.pyx":70
  * 
  *         tabu_list.append(best_candidate)
  *         if len(tabu_list) > max_tabu_list_len:             # <<<<<<<<<<<<<<
@@ -2011,24 +2046,24 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
     }
   }
 
-  /* "searchlib/tabu.pyx":62
+  /* "searchlib/tabu.pyx":73
  *             tabu_list.pop(0)
  * 
  *     if include_best_fitness:             # <<<<<<<<<<<<<<
  *         return (best, best_fitness)
  *     return best
  */
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_include_best_fitness); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_include_best_fitness); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 73, __pyx_L1_error)
   if (__pyx_t_4) {
 
-    /* "searchlib/tabu.pyx":63
+    /* "searchlib/tabu.pyx":74
  * 
  *     if include_best_fitness:
  *         return (best, best_fitness)             # <<<<<<<<<<<<<<
  *     return best
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_v_best);
     __Pyx_GIVEREF(__pyx_v_best);
@@ -2040,7 +2075,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "searchlib/tabu.pyx":62
+    /* "searchlib/tabu.pyx":73
  *             tabu_list.pop(0)
  * 
  *     if include_best_fitness:             # <<<<<<<<<<<<<<
@@ -2049,7 +2084,7 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
  */
   }
 
-  /* "searchlib/tabu.pyx":64
+  /* "searchlib/tabu.pyx":75
  *     if include_best_fitness:
  *         return (best, best_fitness)
  *     return best             # <<<<<<<<<<<<<<
@@ -2059,12 +2094,12 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_r = __pyx_v_best;
   goto __pyx_L0;
 
-  /* "searchlib/tabu.pyx":8
- * SolutionType = Any
- * FitnessType = Any
- * def tabu(             # <<<<<<<<<<<<<<
- *     initial_solution: SolutionType,
- *     get_neighbors: Callable[[SolutionType], Iterable[SolutionType]],
+  /* "searchlib/tabu.pyx":31
+ * 
+ * @cython.cfunc
+ * def _tabu(             # <<<<<<<<<<<<<<
+ *     initial_solution,
+ *     get_neighbors,
  */
 
   /* function exit code */
@@ -2073,8 +2108,8 @@ static PyObject *__pyx_pf_9searchlib_4tabu_tabu(CYTHON_UNUSED PyObject *__pyx_se
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("searchlib.tabu.tabu", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __Pyx_AddTraceback("searchlib.tabu._tabu", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_best);
   __Pyx_XDECREF(__pyx_v_best_fitness);
@@ -2142,11 +2177,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_Iterable, __pyx_k_Iterable, sizeof(__pyx_k_Iterable), 0, 0, 1, 1},
   {&__pyx_n_s_SolutionType, __pyx_k_SolutionType, sizeof(__pyx_k_SolutionType), 0, 0, 1, 1},
   {&__pyx_n_s_best, __pyx_k_best, sizeof(__pyx_k_best), 0, 0, 1, 1},
-  {&__pyx_n_s_best_candidate, __pyx_k_best_candidate, sizeof(__pyx_k_best_candidate), 0, 0, 1, 1},
-  {&__pyx_n_s_best_candidate_fitness, __pyx_k_best_candidate_fitness, sizeof(__pyx_k_best_candidate_fitness), 0, 0, 1, 1},
-  {&__pyx_n_s_best_fitness, __pyx_k_best_fitness, sizeof(__pyx_k_best_fitness), 0, 0, 1, 1},
-  {&__pyx_n_s_candidate, __pyx_k_candidate, sizeof(__pyx_k_candidate), 0, 0, 1, 1},
-  {&__pyx_n_s_candidate_fitness, __pyx_k_candidate_fitness, sizeof(__pyx_k_candidate_fitness), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_fitness, __pyx_k_fitness, sizeof(__pyx_k_fitness), 0, 0, 1, 1},
   {&__pyx_n_s_get_fitness, __pyx_k_get_fitness, sizeof(__pyx_k_get_fitness), 0, 0, 1, 1},
@@ -2158,17 +2188,14 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_max_tabu_list_len, __pyx_k_max_tabu_list_len, sizeof(__pyx_k_max_tabu_list_len), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
-  {&__pyx_n_s_neighbors, __pyx_k_neighbors, sizeof(__pyx_k_neighbors), 0, 0, 1, 1},
   {&__pyx_n_s_pop, __pyx_k_pop, sizeof(__pyx_k_pop), 0, 0, 1, 1},
   {&__pyx_kp_u_returned_no_objects_Need_neighb, __pyx_k_returned_no_objects_Need_neighb, sizeof(__pyx_k_returned_no_objects_Need_neighb), 0, 1, 0, 0},
   {&__pyx_n_s_searchlib_tabu, __pyx_k_searchlib_tabu, sizeof(__pyx_k_searchlib_tabu), 0, 0, 1, 1},
   {&__pyx_kp_s_searchlib_tabu_pyx, __pyx_k_searchlib_tabu_pyx, sizeof(__pyx_k_searchlib_tabu_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_stopping_condition, __pyx_k_stopping_condition, sizeof(__pyx_k_stopping_condition), 0, 0, 1, 1},
   {&__pyx_n_s_tabu, __pyx_k_tabu, sizeof(__pyx_k_tabu), 0, 0, 1, 1},
-  {&__pyx_n_s_tabu_list, __pyx_k_tabu_list, sizeof(__pyx_k_tabu_list), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_typing, __pyx_k_typing, sizeof(__pyx_k_typing), 0, 0, 1, 1},
-  {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
@@ -2186,10 +2213,10 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     initial_solution: SolutionType,
  *     get_neighbors: Callable[[SolutionType], Iterable[SolutionType]],
  */
-  __pyx_tuple_ = PyTuple_Pack(15, __pyx_n_s_initial_solution, __pyx_n_s_get_neighbors, __pyx_n_s_get_fitness, __pyx_n_s_stopping_condition, __pyx_n_s_max_tabu_list_len, __pyx_n_s_include_best_fitness, __pyx_n_s_best, __pyx_n_s_best_fitness, __pyx_n_s_best_candidate, __pyx_n_s_tabu_list, __pyx_n_s_neighbors, __pyx_n_s_best_candidate_fitness, __pyx_n_s_candidate, __pyx_n_s_candidate_fitness, __pyx_n_s_x); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(6, __pyx_n_s_initial_solution, __pyx_n_s_get_neighbors, __pyx_n_s_get_fitness, __pyx_n_s_stopping_condition, __pyx_n_s_max_tabu_list_len, __pyx_n_s_include_best_fitness); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(6, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_searchlib_tabu_pyx, __pyx_n_s_tabu, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_searchlib_tabu_pyx, __pyx_n_s_tabu, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;

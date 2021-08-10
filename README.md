@@ -14,7 +14,8 @@ Currently offers:
 
 
 ## Installation
-`pip3 install git+git://github.com/ctittel/searchlib`
+- Building: `python3 setup.py build_ext --inplace`
+- `pip3 install git+git://github.com/ctittel/searchlib` (or `pip3 install .` if you downloaded the repository)
 
 ## TODO
 - Add test cases and examples for all algorithms
