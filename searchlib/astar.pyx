@@ -1,26 +1,62 @@
-import py_search
-from py_search.informed import best_first_search
-from typing import Callable, Any, Iterable
-# For now just a wrapper of py_search best_first
+from functools import total_ordering
+from typing import Callable, Iterable, Any, List, Tuple
+import cython
 
+cdef reconstruct_path(came_from: dict, current_state: object, initial_state: object):
+    total_path: List[Tuple] = [(current_state, None)]
+    while current_state in came_from:
+        x = came_from[current_state]
+        total_path.append(x)
+        current_state = x[0]
+    assert current_state == initial_state
+    return list(reversed(total_path))
 
-class _Problem(py_search.base.Problem):
-    def __init__(self, initial_state, initial_cost, goal_test_fun, successors_fun, calc_heuristic_fun=None):
-        super().__init__(initial=initial_state, initial_cost=initial_cost)
-        self.goal_test_fun = goal_test_fun
-        self.successors_fun = successors_fun
-        if calc_heuristic_fun:
-            self.node_value = lambda state_node: py_search.base.Problem.node_value(self, state_node) + calc_heuristic_fun(state_node.state)
+cdef class Node:
+    cdef public object state
+    cdef public object cost
+    cdef public bint active
 
-    def goal_test(self, state_node, goal_node):
-        return self.goal_test_fun(state_node)
+    def __cinit__(self, state: object, cost: object, active: bool=True):
+        self.state = state
+        self.cost = cost
+        self.active = True
 
-    def successors(self, state_node):
-        return self.successors_fun(state_node)
+    def __eq__(self, other) -> bool:
+        return self.cost == other.cost
 
-StateType = Any
-CostType = Any
-ActionType = Any
+    def __gt__(self, other) -> bool:
+        return self.cost > other.cost
+
+    def __hash__(self):
+        return hash(self.state)
+
+cdef class MyMinHeap:
+    cdef dict d
+    cdef list l
+
+    def __init__(self):
+        self.l = []
+        self.d = {}
+
+    cdef push(self, state: object, cost: object):
+        if state in self.d:
+            self.d[state].active=False
+        node = Node(state, cost)
+        self.d[state] = node
+        self.l.append(node)
+        self.l = sorted(self.l)
+
+    cdef cython.object pop(self):
+        while len(self.l):
+            node = self.l.pop(0)
+            if node.active == True:
+                return node.state
+        return None # empty
+
+StateType = object
+CostType = object
+ActionType = object
+
 def astar(initial_state: StateType,
           initial_cost: CostType,
           is_goal: Callable[[StateType], bool],
@@ -54,48 +90,53 @@ def astar(initial_state: StateType,
     - result: List of (state, action) pairs with the action taken at the state; last action is None
     - if include_total_cost is True: returns tuple (list, total_cost)
     """
-    def goal_test_fun(state_node: py_search.base.Node):
-        return is_goal(state_node.state)
-
-    def successors_fun(node: py_search.base.Node):
-        for action in get_actions(node.state):
-            next_cost = node.cost() + get_cost(node.state, action)
-            next_state = get_state(node.state, action)
-            yield py_search.base.Node(
-                state=next_state,
-                action=action,
-                node_cost=next_cost,
-                parent=node
-            )
-
-    problem = _Problem(initial_state, initial_cost, goal_test_fun, successors_fun, get_heuristic)
-
-    solution_node = None
-    for result in best_first_search(problem=problem, graph=graph_search, backward=False, forward=True):
-        solution_node = result
-        break
-
-    if solution_node != None:
-        states = []
-        actions = []
-        node = solution_node.state_node
-        while node:
-            states.append(node.state)
-            actions.append(node.action)
-            node = node.parent
-
-        actions = actions[:-1] # remove last one (= first one) for some reason
-        actions = list(reversed(actions))
-        states = list(reversed(states))
-
-        result = actions
-        if include_states:
-            actions += [None]
-            result = list(zip(states, actions))
-
-        if include_total_cost:
-            return (result, solution_node.cost())
-        else:
-            return result
+    if get_heuristic != None:
+        def f(g_cost, state):
+            return g_cost + get_heuristic(state)
     else:
-        return None
+        def f(g_cost, state):
+            return g_cost
+
+    return _astar(initial_state, initial_cost, is_goal, get_actions, get_state, get_cost, f, graph_search, include_states, include_total_cost)
+
+@cython.cfunc
+def _astar(initial_state,
+          initial_cost,
+          is_goal,
+          get_actions,
+          get_state,
+          get_cost,
+          f,
+          graph_search: bool,
+          include_states: bool,
+          include_total_cost: bool,
+          ):
+    open_set: MyMinHeap = MyMinHeap()
+    open_set.push(initial_state, f(initial_cost, initial_state))
+    came_from: dict = {}
+    g_scores: dict = {initial_state: initial_cost}
+
+    while True:
+        current_state = open_set.pop()
+        if current_state == None:
+            raise Exception("No path found!")
+
+        g_current: object = g_scores[current_state]
+        if is_goal(current_state):
+            path = reconstruct_path(came_from, current_state, initial_state)
+            if include_states == False:
+                _states, actions = zip(*path)
+                path: list = actions[:-1]
+            if include_total_cost:
+                return (path, g_current)
+            else:
+                return path
+        for action in get_actions(current_state):
+            g_cost: object = get_cost(current_state, action)
+            next_state: object = get_state(current_state, action)
+            g_score: object = g_current + g_cost
+            if (next_state not in g_scores) or (g_score < g_scores[next_state]):
+                came_from[next_state] = (current_state, action)
+                g_scores[next_state] = g_score
+                f_score = f(g_score, next_state)
+                open_set.push(next_state, f_score)
