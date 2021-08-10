@@ -3,7 +3,7 @@ from typing import Any, Callable, Iterable
 
 SolutionType = Any
 FitnessType = Any
-def tabu(
+def tabu_old(
     initial_solution: SolutionType,
     get_neighbors: Callable[[SolutionType], Iterable[SolutionType]],
     get_fitness: Callable[[SolutionType], FitnessType],
