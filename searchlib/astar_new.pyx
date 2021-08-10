@@ -1,8 +1,9 @@
 import heapq
 from functools import total_ordering
 from typing import Callable, Iterable, Any
+import cython
 
-
+@cython.cfunc
 def reconstruct_path(came_from: dict, current_state, initial_state):
     total_path = [(current_state, None)]
     while current_state in came_from:
@@ -48,15 +49,10 @@ class MyMinHeap:
             if node.active == True:
                 return node.state
 
-    def __iter__(self):
-        while len(self.l) > 0:
-            node = heapq.heappop(self.l)
-            if node.active == True:
-                yield node.state
-
 StateType = Any
 CostType = Any
 ActionType = Any
+
 def astar(initial_state: StateType,
           initial_cost: CostType,
           is_goal: Callable[[StateType], bool],
@@ -91,10 +87,10 @@ def astar(initial_state: StateType,
     - if include_total_cost is True: returns tuple (list, total_cost)
     """
     if get_heuristic != None:
-        def f(g_cost, state: StateType):
+        def f(g_cost, state):
             return g_cost + get_heuristic(state)
     else:
-        def f(g_cost: CostType, state: StateType):
+        def f(g_cost, state):
             return g_cost
 
     open_set = MyMinHeap()
