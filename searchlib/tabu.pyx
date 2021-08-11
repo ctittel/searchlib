@@ -27,8 +27,7 @@ def tabu(
     """
     return _tabu(initial_solution, get_neighbors, get_fitness, stopping_condition, max_tabu_list_len, include_best_fitness)
 
-@cython.cfunc
-def _tabu(
+cdef object _tabu(
     initial_solution,
     get_neighbors,
     get_fitness,
@@ -41,9 +40,8 @@ def _tabu(
     best_candidate = initial_solution
     
     tabu_list = [initial_solution]
-
-    # TODO: Have made some adaptions; check if they are good
-    while not stopping_condition(best=best, fitness=best_fitness):
+    i: int = 0
+    while not stopping_condition(best_fitness=best_fitness, iteration=i):
         neighbors = get_neighbors(best_candidate)
         if len(neighbors) == 0:
             raise Exception(f"get_neighbors({best_candidate}) returned no objects! Need neighbors")
@@ -69,6 +67,7 @@ def _tabu(
         tabu_list.append(best_candidate)
         if len(tabu_list) > max_tabu_list_len:
             tabu_list.pop(0)
+        i += 1
 
     if include_best_fitness:
         return (best, best_fitness)
