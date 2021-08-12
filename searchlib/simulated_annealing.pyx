@@ -8,13 +8,14 @@ SolutionType = Any
 EnergyType = Any
 
 def kirkpatrick_acceptance_probability(E: float, E_new: float, T: float):
+    assert T > 0 
     if E_new < E:
         return 1.0
     else:
         return math.exp((E - E_new) / T)
 
 def default_temperature_fn(k, k_max):
-    return (1 - (k+1) / k_max)
+    return (1 - (k / k_max))
 
 def simulated_annealing(initial_solution: SolutionType,
                         k_max: int,
@@ -41,6 +42,21 @@ def simulated_annealing(initial_solution: SolutionType,
 
     If the used energy type is not a number but of a custom type, a custom implementation of the acceptance_probability_fn must be used
     """
+    return _simulated_annealing(initial_solution,
+                                k_max,
+                                random_neighbor_fn,
+                                energy_fn,
+                                temperature_fn,
+                                acceptance_probability_fn,
+                                random_fn)
+
+cdef _simulated_annealing(initial_solution,
+                        k_max: int,
+                        random_neighbor_fn,
+                        energy_fn,
+                        temperature_fn,
+                        acceptance_probability_fn,
+                        random_fn):
     s = initial_solution
     E = energy_fn(s)
 
