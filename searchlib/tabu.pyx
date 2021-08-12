@@ -25,15 +25,19 @@ def tabu(
     - max_tabu_list_len: How long the tabu list may get before entries are removed
     - include_total_cost: If true, returns a tuple (best solution, best solution's fitness); otherwise, only the best solution is returned
     """
-    return _tabu(initial_solution, get_neighbors_fn, get_fitness_fn, stopping_fn, max_tabu_list_len, include_best_fitness)
+    return _tabu(initial_solution, 
+                get_neighbors_fn, 
+                get_fitness_fn, 
+                stopping_fn, 
+                max_tabu_list_len, 
+                include_best_fitness)
 
-cdef object _tabu(
-    initial_solution,
-    get_neighbors_fn,
-    get_fitness_fn,
-    stopping_fn,
-    max_tabu_list_len: int,
-    include_best_fitness: bool
+cdef object _tabu(initial_solution,
+                    get_neighbors_fn,
+                    get_fitness_fn,
+                    stopping_fn,
+                    max_tabu_list_len: int,
+                    include_best_fitness: bool
 ):
     best = initial_solution
     best_fitness = get_fitness_fn(best)
@@ -42,7 +46,7 @@ cdef object _tabu(
     tabu_list = [initial_solution]
     i: int = 0
     while not stopping_fn(best=best, fitness=best_fitness, i=i):
-        neighbors = get_neighbors_fn(best_candidate)
+        neighbors = list(get_neighbors_fn(best_candidate))
         if len(neighbors) == 0:
             raise Exception(f"get_neighbors_fn({best_candidate}) returned no objects! Need neighbors")
         neighbors = [x for x in neighbors if x not in tabu_list]
