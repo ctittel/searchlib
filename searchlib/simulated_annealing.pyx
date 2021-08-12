@@ -23,7 +23,8 @@ def simulated_annealing(initial_solution: SolutionType,
                         energy_fn: Callable[[SolutionType], EnergyType],
                         temperature_fn: Callable[[int, int], float] = default_temperature_fn,
                         acceptance_probability_fn: Callable[[EnergyType, EnergyType, float], float] = kirkpatrick_acceptance_probability,
-                        random_fn = random):
+                        random_fn = random,
+                        include_best_energy=False):
     """
     Inputs:
     - initial_s: initial solution; any type
@@ -48,7 +49,8 @@ def simulated_annealing(initial_solution: SolutionType,
                                 energy_fn,
                                 temperature_fn,
                                 acceptance_probability_fn,
-                                random_fn)
+                                random_fn,
+                                include_best_energy)
 
 cdef _simulated_annealing(initial_solution,
                         k_max: int,
@@ -56,7 +58,8 @@ cdef _simulated_annealing(initial_solution,
                         energy_fn,
                         temperature_fn,
                         acceptance_probability_fn,
-                        random_fn):
+                        random_fn,
+                        include_best_energy):
     s = initial_solution
     E = energy_fn(s)
 
@@ -67,4 +70,7 @@ cdef _simulated_annealing(initial_solution,
         if acceptance_probability_fn(E, E_new, T) >= random_fn():
             s = s_new
             E = E_new
-    return s
+    if not include_best_energy:
+        return s
+    else:
+        return (s, E)
