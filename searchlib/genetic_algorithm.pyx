@@ -1,5 +1,5 @@
 # https://en.wikipedia.org/wiki/Genetic_algorithm
-from typing import List, Callable, Iterable
+from typing import List, Callable, Iterable, Union, Tuple
 import random
 
 SolutionType = object
@@ -27,7 +27,23 @@ def genetic_algorithm(initial_population: List[SolutionType],
                         number_of_parents: int = 2,
                         parent_population_size: int = None,
                         include_best_fitness=False
-                        ):
+                        ) -> Union[SolutionType, Tuple[SolutionType, FitnessType]]:
+    """
+    Inputs:
+    - initial_population: a list with the initial solutions
+    - fitness_fn(solution) -> fitness: Function that returns the fitness of a solution (higher fitness is better)
+    - breeding_fn(list of parent solutions) -> new child solution: Calculates a "child" solution from a list of parents
+        - number_of_parents parameter determines how many parent solutions are in the list
+    - stopping_fn(current best solution, corresponding fitness, iteration number) -> True if optimization should be stopped now
+    - ranking_fn(list of current solution population, list of the corresponding fitnesses) -> the same solutions ranked (the best or selected solutions come first). 
+        - parent_population_size solutions are chosen from the list
+    - number_of_parents: see breeding_fn
+    - parent_population_size: See ranking_fn; if None (default): the rounded half length of the intial_population list
+    - include_best_fitness: If True not the best solution is returned but a tuple (best solution, corresponding fitness)
+
+    Returns:
+    - Best solution or (if include_best_fitness is True) a tuple (best solution, corresponding fitness)
+    """
     population_size = len(initial_population)
 
     if parent_population_size == None:

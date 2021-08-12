@@ -26,14 +26,18 @@ def simulated_annealing(initial_solution: SolutionType,
                         random_fn = random,
                         include_best_energy=False):
     """
+    Solutions and Energies can be of any type, but the given callback functions must be able to handle objects of these types.
+    If no custom acceptance_probability_fn is passed, energies must be numbers (ideally positive floats)
+    Lower energies are better (so energies correspond directly to costs).
+
     Inputs:
-    - initial_s: initial solution; any type
+    - initial_solution: the initial solution
     - k_max: number of optimization steps; positive integer
-    - random_neighbor_fn: function: prev_solution -> random solution in the neighboorhood of prev_solution
-    - energy_fn: function: solution -> energy 
+    - random_neighbor_fn(solution) -> new random solution in the neighborhood
+    - energy_fn(solution) -> energy 
         - the energy can be of any type; when using the default acceptance_probability function the energy must be of type float 
         - the algorithm tries to minimize the energy
-    - temperature_fn: function: k_current, k_max -> float [0.0, 1.0]
+    - temperature_fn(current step, max steps) -> float between 0.0 and 1.0
         - maps current step number to a float
         - larger step numbers (large k_current) should return smaller (closer to 0) temperatures
     - acceptance_probability_fn: function (energy of current solution, energy of best solution, current temperature) -> probability [0.0, 1.0]

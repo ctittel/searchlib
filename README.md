@@ -8,6 +8,7 @@ Current search algorithms:
 - A* (`from searchlib import astar`)
 - Simulated Annealing (`from searchlib import simulated_annealing`)
 - Tabu Search (`from searchlib import tabu`)
+- Genetic Algorithm (`from searchlib import genetic_algorithm`)
 
 ## Contribution
 
