@@ -1,44 +1,46 @@
 # https://en.wikipedia.org/wiki/Genetic_algorithm
 from typing import List, Callable, Iterable, Union, Tuple
 import random
+import math
 
 SolutionType = object
 FitnessType = object
 
 
-cdef list elitist_ranking(solutions: List[SolutionType], fitnesses: List[FitnessType]):
+cdef list elitist_selection(solutions: List[SolutionType], fitnesses: List[FitnessType], num_of_parents=None):
+    if num_of_parents == None:
+        num_of_parents = len(solutions) // 2
     s = sorted(zip(solutions, fitnesses), key=lambda x: x[1])
     solutions, _ = zip(*s)
-    return list(reversed(solutions))
+    a = list(reversed(solutions))
+    return a[:num_of_parents]
 
-cdef list fitness_proportionate_ranking(solutions: List[SolutionType], fitnesses: List[FitnessType]):
+cdef list fitness_proportionate_selection(solutions: List[SolutionType], fitnesses: List[FitnessType]):
     s = sorted(zip(solutions, fitnesses), key=lambda x: x[1])
     solutions_sorted, _ = zip(*s) # worst first, best last
     solutions_sorted = list(solutions_sorted)
     float_fitnesses = [(x+1)/len(solutions) for x in range(len(solutions))]
     float_fitnesses = [x + random.random() for x in float_fitnesses] # add random factor
-    return elitist_ranking(solutions_sorted, float_fitnesses)
+    return elitist_selection(solutions_sorted, float_fitnesses)
 
 def genetic_algorithm(initial_population: List[SolutionType],
                         fitness_fn: Callable[[SolutionType], FitnessType],
                         breeding_fn: Callable[[List[SolutionType]], SolutionType],
+                        number_of_parents: int,
                         stopping_fn: Callable[[SolutionType, FitnessType, int], bool],
-                        ranking_fn: Callable[[List[SolutionType], List[FitnessType]], Iterable[SolutionType]] = fitness_proportionate_ranking,
-                        number_of_parents: int = 2,
-                        parent_population_size: int = None,
-                        include_best_fitness=False
+                        selection_fn: Callable[[List[SolutionType], List[FitnessType]], Iterable[SolutionType]] = fitness_proportionate_selection,
+                        include_best_fitness=False,
                         ) -> Union[SolutionType, Tuple[SolutionType, FitnessType]]:
     """
     Inputs:
     - initial_population: a list with the initial solutions
     - fitness_fn(solution) -> fitness: Function that returns the fitness of a solution (higher fitness is better)
     - breeding_fn(list of parent solutions) -> new child solution: Calculates a "child" solution from a list of parents
-        - number_of_parents parameter determines how many parent solutions are in the list
-    - stopping_fn(current best solution, corresponding fitness, iteration number) -> True if optimization should be stopped now
-    - ranking_fn(list of current solution population, list of the corresponding fitnesses) -> the same solutions ranked (the best or selected solutions come first). 
-        - parent_population_size solutions are chosen from the list
+        - number_of_parents parameter determines how many parent solutions are passed
     - number_of_parents: see breeding_fn
-    - parent_population_size: See ranking_fn; if None (default): the rounded half length of the intial_population list
+    - stopping_fn(current best solution, corresponding fitness, iteration number) -> True if optimization should be stopped now
+    - selection_fn(list of current solution population, list of the corresponding fitnesses) -> selected parents from the population
+        - by default a selection probability is calculated based on their rank in the batch to which a random number is then added; the best half are then selected based on this selection probability
     - include_best_fitness: If True not the best solution is returned but a tuple (best solution, corresponding fitness)
 
     Returns:
@@ -46,11 +48,7 @@ def genetic_algorithm(initial_population: List[SolutionType],
     """
     population_size = len(initial_population)
 
-    if parent_population_size == None:
-        parent_population_size = population_size // 2
-        assert parent_population_size > number_of_parents
-
-    best, best_fitness = _ga(initial_population, fitness_fn, breeding_fn, stopping_fn, ranking_fn, population_size, number_of_parents, parent_population_size)
+    best, best_fitness = _ga(initial_population, fitness_fn, breeding_fn, stopping_fn, selection_fn, population_size, number_of_parents)
     if include_best_fitness:
         return (best, best_fitness)
     else:
@@ -60,10 +58,9 @@ cdef _ga(population: list,
             fitness_fn,
             breeding_fn,
             stopping_fn,
-            ranking_fn,
+            selection_fn,
             population_size:int,
-            number_of_parents: int,
-            parent_population_size: int):
+            number_of_parents: int):
     best = population[0]
     best_fitness = fitness_fn(best)
     i = 0
@@ -75,9 +72,11 @@ cdef _ga(population: list,
             best_fitness = current_best_fitness
             best = current_best
 
-        ranked_pop = ranking_fn(population, fitnesses)
         # select top parents
-        parents = [x for _, x in zip(range(parent_population_size), ranked_pop)]
+        parents = selection_fn(population, fitnesses)
+        if len(parents) < number_of_parents:
+            k = math.ceil(number_of_parents / len(parents))
+            parents = parents*2
         # create pairs of parents
         parent_pairs = [random.sample(parents, number_of_parents) for _ in range(population_size)]
         # create next population
