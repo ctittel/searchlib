@@ -8,12 +8,13 @@ FitnessType = object
 
 cdef list elitist_ranking(solutions: List[SolutionType], fitnesses: List[FitnessType]):
     s = sorted(zip(solutions, fitnesses), key=lambda x: x[1])
-    solutions, fintesses = zip(*s)
-    return solutions[::-1]
+    solutions, _ = zip(*s)
+    return list(reversed(solutions))
 
 cdef list fitness_proportionate_ranking(solutions: List[SolutionType], fitnesses: List[FitnessType]):
     s = sorted(zip(solutions, fitnesses), key=lambda x: x[1])
     solutions_sorted, _ = zip(*s) # worst first, best last
+    solutions_sorted = list(solutions_sorted)
     float_fitnesses = [(x+1)/len(solutions) for x in range(len(solutions))]
     float_fitnesses = [x + random.random() for x in float_fitnesses] # add random factor
     return elitist_ranking(solutions_sorted, float_fitnesses)
