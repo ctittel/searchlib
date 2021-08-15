@@ -21,7 +21,7 @@ Current search algorithms:
 - `pip3 install git+git://github.com/ctittel/searchlib` (or `pip3 install .` if you have the repository locally and are `cd`'d into it)
 
 ## TODO
-- Add more algorithms
+- Add more algorithms: ACO, Greate Deluge
 - Add test cases and examples for all algorithms
 - Optimization as much as possible (currently with Cython, can it be improved without introducing any more restrictions for the user?) 
 
