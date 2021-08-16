@@ -1,71 +1,116 @@
 # Ant-colony optimization: https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms
 
-from typing import Callable, List, Tuple
+from typing import Callable, List, Tuple, Dict
 import numpy as np
 
 StateType = object
 PathType = List[StateType]
+CostType = object
+
+
+def default_path_fitness_fn(path: list, attractivenesses: dict):
+    return sum([attractivenesses[(x)] for x in zip(path[:-1], path[1:])])
+
+
+def default_select_next_state_fn(path: list,
+                                 next_states: list,
+                                 phermone_levels: list,
+                                 costs: list,
+                                 alpha=0.5, beta=0.5):
+    etas = np.array(costs) ** (-1)
+    taus = np.array(phermone_levels)
+    product = (taus**alpha) * (etas**beta)
+    p = product / product.sum()
+    return np.random.choice(next_states, p=p)
+
+def default_phermone_delta_fn(path, cost, finished, Q=1.0):
+    if finished:
+        return (Q / cost)
+    else:
+        return -1 * (Q / cost)
 
 def aco(initial_state: StateType,
-        attractiveness_fn: Callable[[StateType, StateType], float],
+        cost_fn: Callable[[StateType, StateType], CostType],
         stopping_fn: Callable[[StateType, float, int], bool],
-        alpha: float,
-        beta: float,
         n_ants: int,
-        phi: float,
+        phi: float, # phermone decay factor
         next_states_fn: Callable[[PathType], List[StateType]],
         is_complete_fn: Callable[[PathType], bool],
-        include_best_attractiveness=False):
+        select_next_state_fn: Callable[[PathType,           # path
+                                        List[StateType],    # next_states
+                                        List[float],        # phermone_levels
+                                        List[CostType]],    # costs
+                                       StateType] = default_select_next_state_fn,  # -> selected next state
+        phermone_delta_fn: Callable[[PathType, CostType, bool]] = default_phermone_delta_fn,
+        initial_cost: CostType = 0.0,
+        include_best_cost=False):
 
     phermone_levels = {}
     default_phermone_level = 1.0
-    attractivenesses = {} # key: (prev_state, next_state) val: attractiveness_fn(prev_state, next_state)
-    Q = 1.0
+    costs = {}  # key: (prev_state, next_state)
 
     best = None
-    best_att = None
+    best_cost = None
     i = 0
-    while not stopping_fn(best=best, attractivenesses=best_att, i=i):
+    while not stopping_fn(best=best, cost=best_cost, i=i):
         i += 1
         paths = []
-        paths_atts = []
+        unfinished_paths = []
 
         for ant in range(n_ants):
             path = [initial_state]
-            total_att = 0.0
+            _total_cost = initial_cost
 
             while not is_complete_fn(path):
                 current_state = path[-1]
                 next_states = next_states_fn(path)
-                for x in next_states: 
-                    xx = (current_state, x)
-                    if xx not in attractivenesses:
-                        attractivenesses[xx] = attractiveness_fn(*xx)
-                    
-                etas = np.array([attractivenesses[(current_state, x)] for x in next_states])
-                taus = np.array([phermone_levels.get((current_state, x),default_phermone_level) for x in next_states])
-                
-                product = (taus**alpha) * (etas**beta)
-                p = product / product.sum()
-                next_state = np.random.choice(next_states, p=p)
+                if not len(next_states):  # Stuck
+                    break
+                for x in next_states:
+                    if (current_state, x) not in costs:
+                        costs[(current_state, x)] = cost_fn(current_state, x)
+
+                next_states_costs = [costs[(current_state, x)]
+                                     for x in next_states]
+                next_states_phermone = [
+                    phermone_levels[(current_state, x)] for x in next_states]
+                next_state = select_next_state_fn(path,
+                                                  next_states,
+                                                  next_states_phermone,
+                                                  next_states_costs
+                                                  )
                 path.append(next_state)
-                total_att += attractivenesses[(current_state, next_state)]
-            paths.append(path)
-            paths_atts.append(total_att)
+                _total_cost += costs[(current_state, next_state)]
+            if is_complete_fn(path):
+                paths.append((path, _total_cost))
+            else:
+                # Ant got stuck and starved :(
+                unfinished_paths.append((path, _total_cost))
 
-        best_i = np.argmax(paths_atts)
-        if best is None or paths_atts[best_i] > best_att:
-            best = paths[best_i]
-            best_att = paths_atts[best_i]
-
+        #+ Calc phermone deltas
         deltas = {}
-        for path, att in zip(paths, paths_atts):
+        for path, path_cost in paths:
             for pair in zip(path[:-1], path[1:]):
-                deltas[pair] = deltas.get(pair, 0.0) + Q * att
+                deltas[pair] = deltas.get(pair, 0.0) + phermone_delta_fn(path, path_cost, True)
+        for path, path_cost in unfinished_paths:
+            for pair in zip(path[:-1], path[1:]):
+                deltas[pair] = deltas.get(pair, 0.0) + phermone_delta_fn(path, path_cost, False)
+
+        #+ Apply decay
+        for x, phermone in phermone_levels.items():
+            phermone_levels[x] = (1-phi)*phermone
+        default_phermone_level *= (1-phi)
+
+        #+ Apply delta
         for pair, delta in deltas.items():
-            phermone_levels[pair] = (1-phi)*phermone_levels.get(pair, default_phermone_level) + delta
-    
-    if include_best_attractiveness:
-        return (best, best_att)
+            phermone_levels[pair] = phermone_levels.get(pair, default_phermone_level) + delta
+
+        current_best, current_best_cost = min(paths, key=lambda x: x[1])
+        if best is None or current_best_cost < best_cost:
+            best = current_best
+            best_cost = current_best_cost
+
+    if include_best_cost:
+        return (best, best_cost)
     else:
         return best
