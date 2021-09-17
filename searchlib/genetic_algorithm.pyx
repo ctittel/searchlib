@@ -29,6 +29,7 @@ def genetic_algorithm(initial_population: List[SolutionType],
                         number_of_parents: int,
                         stopping_fn: Callable[[SolutionType, FitnessType, int], bool],
                         selection_fn: Callable[[List[SolutionType], List[FitnessType]], Iterable[SolutionType]] = fitness_proportionate_selection,
+                        mutation_fn: Callable[[SolutionType], SolutionType] = None,
                         include_best_fitness=False,
                         ) -> Union[SolutionType, Tuple[SolutionType, FitnessType]]:
     """
@@ -48,7 +49,18 @@ def genetic_algorithm(initial_population: List[SolutionType],
     """
     population_size = len(initial_population)
 
-    best, best_fitness = _ga(initial_population, fitness_fn, breeding_fn, stopping_fn, selection_fn, population_size, number_of_parents)
+    if mutation_fn is None:
+        mutation_fn = lambda x: x
+
+    best, best_fitness = _ga(initial_population, 
+                                fitness_fn, 
+                                breeding_fn, 
+                                stopping_fn, 
+                                selection_fn,
+                                mutation_fn,
+                                population_size, 
+                                number_of_parents)
+
     if include_best_fitness:
         return (best, best_fitness)
     else:
@@ -59,6 +71,7 @@ cdef _ga(population: list,
             breeding_fn,
             stopping_fn,
             selection_fn,
+            mutation_fn,
             population_size:int,
             number_of_parents: int):
     best = population[0]
@@ -80,7 +93,7 @@ cdef _ga(population: list,
         # create pairs of parents
         parent_pairs = [random.sample(parents, number_of_parents) for _ in range(population_size)]
         # create next population
-        population = [breeding_fn(x) for x in parent_pairs]
+        population = [mutation_fn(breeding_fn(x)) for x in parent_pairs]
         assert len(population) == population_size
         i += 1
 
