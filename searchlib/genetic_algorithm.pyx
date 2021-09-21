@@ -93,7 +93,7 @@ cdef _ga(population: list,
         # create pairs of parents
         parent_pairs = [random.sample(parents, number_of_parents) for _ in range(population_size)]
         # create next population
-        population = [mutation_fn(breeding_fn(x)) for x in parent_pairs]
+        population = [mutation_fn(breeding_fn(*x)) for x in parent_pairs]
         assert len(population) == population_size
         i += 1
 
