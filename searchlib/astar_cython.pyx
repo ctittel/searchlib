@@ -4,10 +4,14 @@ import cython
 
 cdef reconstruct_path(came_from: dict, current_state: object, initial_state: object):
     total_path: List[Tuple] = [(current_state, None)]
+    states = set([current_state])
     while current_state in came_from:
         x = came_from[current_state]
-        total_path.append(x)
         current_state = x[0]
+        if current_state in states:
+            raise Exception(f"Encountered a cycle while reconstructing path. State {current_state} is already in path {total_path}")
+        total_path.append(x)
+        states.add(current_state)
     assert current_state == initial_state
     return list(reversed(total_path))
 
@@ -50,8 +54,15 @@ cdef class MyMinHeap:
         while len(self.l):
             node = self.l.pop(0)
             if node.active == True:
+                del self.d[node.state]
                 return node.state
         return None # empty
+    
+    def __len__(self):
+        return len(self.l)
+    
+    def __contains__(self, state):
+        return (state in self.d)
 
 
 cpdef _astar(initial_state,
@@ -62,15 +73,20 @@ cpdef _astar(initial_state,
           get_cost,
           f,
           include_states: bool,
+          graph_search: bool
           ):
     open_set: MyMinHeap = MyMinHeap()
     open_set.push(initial_state, f(initial_cost, initial_state))
     came_from: dict = {}
     g_scores: dict = {initial_state: initial_cost}
+    closed_set = set()
 
     while True:
         current_state = open_set.pop()
-        if current_state == None:
+        while current_state in closed_set:
+            current_state = open_set.pop()
+
+        if current_state is None:
             # No path found
             return (None, None)
 
@@ -82,11 +98,19 @@ cpdef _astar(initial_state,
                 path: list = actions[:-1]
             return (path, g_current)
         for action in get_actions(current_state):
-            g_cost: object = get_cost(current_state, action)
             next_state: object = get_state(current_state, action)
-            g_score: object = g_current + g_cost
-            if (next_state not in g_scores) or (g_score < g_scores[next_state]):
+            g_score: object = g_current + get_cost(current_state, action)
+            f_score = f(g_score, next_state)
+            if (next_state not in open_set) and (next_state not in closed_set) and (next_state != current_state):
+                assert next_state != current_state, f"current_state={current_state} next_state={next_state} open_set={open_set.d.keys()}"
+                g_scores[next_state] = g_score
+                came_from[next_state] = (current_state, action)
+                open_set.push(next_state, f_score)
+            elif g_score < g_scores[next_state]:
                 came_from[next_state] = (current_state, action)
                 g_scores[next_state] = g_score
-                f_score = f(g_score, next_state)
-                open_set.push(next_state, f_score)
+                if next_state in open_set:
+                    open_set.push(next_state, f_score)
+
+        if graph_search:
+            closed_set.add(current_state)

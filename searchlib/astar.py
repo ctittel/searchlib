@@ -15,6 +15,7 @@ def astar(initial_state: StateType,
           get_heuristic: Callable[[StateType], CostType] = None,
           include_states: bool = True,
           include_total_cost: bool = False,
+          graph_search = False
           ):
     """
     Actions, states and costs can be of any type
@@ -38,7 +39,7 @@ def astar(initial_state: StateType,
     - result: List of (state, action) pairs with the action taken at the state; last action is None
     - if include_total_cost is True: returns tuple (list, total_cost)
     """
-    if get_heuristic != None:
+    if get_heuristic is not None:
         def f(g_cost, state):
             return g_cost + get_heuristic(state)
     else:
@@ -52,7 +53,8 @@ def astar(initial_state: StateType,
                                 get_state, 
                                 get_cost, 
                                 f, 
-                                include_states)
+                                include_states,
+                                graph_search)
     if include_total_cost:
         return (best, best_cost)
     else:
