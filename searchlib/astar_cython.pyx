@@ -66,15 +66,15 @@ cdef class MyMinHeap:
 
 
 cpdef _astar(initial_state,
-          initial_cost,
-          is_goal,
-          get_actions,
-          get_state,
-          get_cost,
-          f,
-          include_states: bool,
-          graph_search: bool
-          ):
+            initial_cost,
+            is_goal,
+            get_actions,
+            get_state,
+            get_cost,
+            f,
+            include_states: bool,
+            graph_search: bool
+            ):
     open_set: MyMinHeap = MyMinHeap()
     open_set.push(initial_state, f(initial_cost, initial_state))
     came_from: dict = {}
@@ -87,7 +87,6 @@ cpdef _astar(initial_state,
             current_state = open_set.pop()
 
         if current_state is None:
-            # No path found
             return (None, None)
 
         g_current: object = g_scores[current_state]
@@ -96,17 +95,21 @@ cpdef _astar(initial_state,
             if include_states == False:
                 _states, actions = zip(*path)
                 path: list = actions[:-1]
-            return (path, g_current)
+            return (path, g_scores[current_state])
         for action in get_actions(current_state):
             next_state: object = get_state(current_state, action)
-            g_score: object = g_current + get_cost(current_state, action)
+
+            g_score = get_cost(current_state, action)
+            if g_scores[current_state] is not None:
+                g_score += g_scores[current_state]
+
             f_score = f(g_score, next_state)
             if (next_state not in open_set) and (next_state not in closed_set) and (next_state != current_state):
                 assert next_state != current_state, f"current_state={current_state} next_state={next_state} open_set={open_set.d.keys()}"
                 g_scores[next_state] = g_score
                 came_from[next_state] = (current_state, action)
                 open_set.push(next_state, f_score)
-            elif g_score < g_scores[next_state]:
+            elif (g_scores[next_state] is not None) and (g_score < g_scores[next_state]):
                 came_from[next_state] = (current_state, action)
                 g_scores[next_state] = g_score
                 if next_state in open_set:

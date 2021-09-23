@@ -6,16 +6,17 @@ StateType = object
 CostType = object
 ActionType = object
 
+
 def astar(initial_state: StateType,
-          initial_cost: CostType,
           is_goal: Callable[[StateType], bool],
           get_actions: Callable[[StateType], Iterable[ActionType]],
           get_state: Callable[[StateType, ActionType], StateType],
           get_cost: Callable[[StateType, ActionType], CostType],
           get_heuristic: Callable[[StateType], CostType] = None,
+          initial_cost: CostType = None,
           include_states: bool = True,
           include_total_cost: bool = False,
-          graph_search = False
+          graph_search=False
           ):
     """
     Actions, states and costs can be of any type
@@ -41,20 +42,24 @@ def astar(initial_state: StateType,
     """
     if get_heuristic is not None:
         def f(g_cost, state):
-            return g_cost + get_heuristic(state)
+            h = get_heuristic(state)
+            if g_cost is not None:
+                return g_cost + h
+            else:
+                return h
     else:
         def f(g_cost, state):
             return g_cost
 
-    best, best_cost = _astar(initial_state, 
-                                initial_cost, 
-                                is_goal, 
-                                get_actions, 
-                                get_state, 
-                                get_cost, 
-                                f, 
-                                include_states,
-                                graph_search)
+    best, best_cost = _astar(initial_state,
+                             initial_cost,
+                             is_goal,
+                             get_actions,
+                             get_state,
+                             get_cost,
+                             f,
+                             include_states,
+                             graph_search)
     if include_total_cost:
         return (best, best_cost)
     else:
